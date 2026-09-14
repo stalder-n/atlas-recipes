@@ -16,7 +16,7 @@ fn table_matches_the_reference_shape() {
     // are here to make a change deliberate, not to police it: what the table
     // must *cover* is checked against the engine snapshot in `flags::coverage`,
     // which is an authority this number is not.
-    assert_eq!(ATLAS_FLAGS.len(), 57, "flag count changed");
+    assert_eq!(ATLAS_FLAGS.len(), 58, "flag count changed");
     assert_eq!(
         ATLAS_FLAGS
             .iter()

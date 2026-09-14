@@ -19,7 +19,10 @@ use std::path::Path;
 /// Launch a recipe, or print the command it would run.
 pub fn run(args: &RunArgs) -> Result<()> {
     let set = crate::commands::registry_set()?;
-    let mut recipe = set.resolve(&RecipeRef::parse(&args.recipe))?;
+    let mut recipe = set.resolve_with_fs(
+        &RecipeRef::parse(&args.recipe),
+        &atlasctl_core::io::StdFileSystem,
+    )?;
 
     if let Some(image) = &args.image {
         recipe.container = image.clone();

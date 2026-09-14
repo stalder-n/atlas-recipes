@@ -89,7 +89,6 @@ pub static EXCLUDED: &[(&str, &str)] = &[
     // passthrough is an untested one.
     ("no_fast_load", "no recipe needs it; add it when one does"),
     ("fast_load_prefetch_shards", "no recipe needs it; add it when one does"),
-    ("swap_space_gb", "no recipe needs it; add it when one does"),
     ("fp8_kv_headroom", "no recipe needs it; add it when one does"),
     ("vision_max_pixels", "no recipe needs it; add it when one does"),
     ("video_fps", "no recipe needs it; add it when one does"),

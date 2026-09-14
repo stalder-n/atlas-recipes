@@ -2,7 +2,11 @@
 
 //! Where recipes come from, and how a name resolves to one.
 
+mod local;
 mod remote;
+
+#[cfg(test)]
+mod local_tests;
 
 pub use remote::{RemoteRegistry, RemoteStore, git_clone_argv, git_update_argv};
 

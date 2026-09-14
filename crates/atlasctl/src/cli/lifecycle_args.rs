@@ -7,7 +7,7 @@ use clap::Args;
 /// `run` arguments.
 #[derive(Args, Debug)]
 pub struct RunArgs {
-    /// Recipe reference: `name` or `@registry/name`.
+    /// Recipe reference: `name`, `@registry/name`, or a local YAML path.
     pub recipe: String,
 
     /// Override a recipe setting, e.g. `-o max_model_len=8192`.

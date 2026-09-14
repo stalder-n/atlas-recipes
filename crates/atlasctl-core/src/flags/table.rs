@@ -20,7 +20,7 @@
 
 use super::{FlagKind, FlagSpec};
 
-/// Every serve flag the `atlas` runtime understands: 57 keys, 9 of them bare toggles.
+/// Every serve flag the `atlas` runtime understands: 58 keys, 9 of them bare toggles.
 #[rustfmt::skip] // One line per flag: this is a lookup table, and reading it
 // against the reference implementation is the point.
 /// The port `spark serve` listens on when a recipe does not name one.
@@ -33,7 +33,7 @@ use super::{FlagKind, FlagSpec};
 /// a port nothing is listening on, moments after a successful launch.
 pub const DEFAULT_SERVE_PORT: &str = "8888";
 
-pub static ATLAS_FLAGS: [FlagSpec; 57] = [
+pub static ATLAS_FLAGS: [FlagSpec; 58] = [
     FlagSpec {
         key: "port",
         flag: "--port",
@@ -197,6 +197,11 @@ pub static ATLAS_FLAGS: [FlagSpec; 57] = [
     FlagSpec {
         key: "gpu_ordinal",
         flag: "--gpu-ordinal",
+        kind: FlagKind::Value,
+    },
+    FlagSpec {
+        key: "swap_space_gb",
+        flag: "--swap-space-gb",
         kind: FlagKind::Value,
     },
     FlagSpec {

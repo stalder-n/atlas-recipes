@@ -85,7 +85,10 @@ pub fn list(args: &ListArgs) -> Result<()> {
 /// Print one recipe in detail.
 pub fn show(args: &ShowArgs) -> Result<()> {
     let set = crate::commands::registry_set()?;
-    let recipe = set.resolve(&RecipeRef::parse(&args.recipe))?;
+    let recipe = set.resolve_with_fs(
+        &RecipeRef::parse(&args.recipe),
+        &atlasctl_core::io::StdFileSystem,
+    )?;
 
     if args.docker {
         let host = hostinfo::snapshot()?;

@@ -214,17 +214,37 @@ fn overrides_flow_through_the_chain_into_the_command() {
 
 #[test]
 fn unmapped_recipe_settings_are_reported_on_the_plan() {
-    // `swap_space_gb` is a real engine flag this project does not pass through
+    // `no_fast_load` is a real engine flag this project does not pass through
     // — see `flags::coverage::EXCLUDED`. It still has to be reported rather
     // than dropped, because from the recipe author's side an excluded flag and
     // a misspelt one look identical until someone says so.
-    let p = plan(&recipe("  swap_space_gb: 32\n"), &Placement::Solo);
+    let p = plan(&recipe("  no_fast_load: true\n"), &Placement::Solo);
     assert_eq!(p.unmapped.len(), 1);
-    assert_eq!(p.unmapped[0].key, "swap_space_gb");
+    assert_eq!(p.unmapped[0].key, "no_fast_load");
     assert!(
-        !p.docker.command.join(" ").contains("swap-space"),
+        !p.docker.command.iter().any(|arg| arg == "--no-fast-load"),
         "an unclaimed setting must not reach the command"
     );
+}
+
+#[test]
+fn swap_space_reaches_the_command_including_explicit_zero() {
+    for value in [0, 32] {
+        let p = plan(
+            &recipe(&format!("  swap_space_gb: {value}\n")),
+            &Placement::Solo,
+        );
+        assert!(p.unmapped.is_empty(), "{:?}", p.unmapped);
+        let expected = value.to_string();
+        assert!(
+            p.docker
+                .command
+                .windows(2)
+                .any(|pair| { pair[0] == "--swap-space-gb" && pair[1] == expected }),
+            "{:?}",
+            p.docker.command
+        );
+    }
 }
 
 #[test]
